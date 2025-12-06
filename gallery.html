@@ -1,0 +1,1330 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gallery - Kg Konyark Investment</title>
+    <link rel="icon" type="image/svg+xml" href="images/kgkonyarkinvlogo.svg">
+    <link rel="stylesheet" href="css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <script src="js/header-loader.js"></script>
+    <style>
+        /* Gallery Styles */
+        :root {
+            --primary: #3F2305;
+            --secondary: #e1ecf0;
+            --accent: #d8520e;
+            --dark: #0a0a0a;
+            --light: #faf8f8;
+            --white: #fff;
+            --gray-100: #f8f9fa;
+            --gray-200: #e9ecef;
+            --gray-300: #dee2e6;
+            --gray-400: #ced4da;
+            --gray-500: #adb5bd;
+            --gray-600: #6c757d;
+            --gray-700: #495057;
+            --gray-800: #343a40;
+            --gray-900: #212529;
+            --border-radius: 12px;
+            --border-radius-sm: 10px;
+            --shadow-sm: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+            --shadow-md: 0 4px 6px rgba(0,0,0,0.1), 0 2px 4px rgba(0,0,0,0.06);
+            --shadow-lg: 0 10px 25px rgba(0,0,0,0.15), 0 6px 10px rgba(0,0,0,0.08);
+            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--gray-100);
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+        }
+
+        /* Keep main header fixed on scroll */
+        .header {
+            position: fixed !important;
+            top: 0 !important;
+            width: 100% !important;
+            z-index: 1000 !important;
+        }
+
+        /* Gallery Header Container */
+        .gallery-header-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 1rem;
+        }
+        
+        /* Main Gallery Container */
+        .gallery-container {
+            padding-top: 5px !important;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 1rem;
+        }
+
+        /* Gallery Header */
+        .gallery-header {
+            background: transparent;
+            border-bottom: none;
+            position: static;
+            padding: 0.5rem 1rem;
+            box-shadow: none;
+            margin-top: 90px;
+        }
+
+        .gallery-top-bar {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 0.5rem;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .gallery-title {
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--dark);
+            margin: 0;
+            display: none;
+        }
+
+        .gallery-search {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            position: relative;
+            max-width: 500px;
+            width: 100%;
+        }
+
+        .search-input {
+            border: 2px solid var(--gray-300);
+            border-radius: 50px;
+            padding: 0.75rem 3.5rem 0.75rem 1.5rem;
+            font-size: 0.95rem;
+            width: 100%;
+            transition: var(--transition);
+            background: var(--white);
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+        }
+
+        .search-input:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 4px 12px rgba(63, 35, 5, 0.15);
+        }
+
+        .search-btn {
+            background: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 42px;
+            height: 42px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: var(--transition);
+            box-shadow: var(--shadow-sm);
+            position: absolute;
+            right: 4px;
+        }
+
+        .search-btn:hover {
+            background: var(--accent);
+            transform: scale(1.05);
+            box-shadow: var(--shadow-md);
+        }
+
+        /* Category Filter Wrapper */
+        .category-filter-wrapper {
+            position: sticky;
+            top: 70px;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            z-index: 100;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            padding: 0.65rem 0;
+        }
+
+        /* Category Filter */
+        .category-filter {
+            display: flex;
+            gap: 0.5rem;
+            overflow-x: auto;
+            padding: 0.5rem 1rem;
+            margin: 0 auto;
+            max-width: 1400px;
+            -webkit-overflow-scrolling: touch;
+            scrollbar-width: thin;
+            scrollbar-color: var(--gray-300) transparent;
+        }
+
+        .category-filter::-webkit-scrollbar {
+            height: 4px;
+        }
+
+        .category-filter::-webkit-scrollbar-track {
+            background: transparent;
+        }
+
+        .category-filter::-webkit-scrollbar-thumb {
+            background: var(--gray-300);
+            border-radius: 2px;
+        }
+
+        .category-chip {
+            background: var(--white);
+            border: 2px solid var(--gray-200);
+            border-radius: 25px;
+            padding: 0.4rem 0.9rem;
+            font-size: 0.85rem;
+            font-weight: 500;
+            color: var(--gray-700);
+            cursor: pointer;
+            transition: var(--transition);
+            white-space: nowrap;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .category-chip:hover {
+            border-color: var(--primary);
+            color: var(--primary);
+            transform: translateY(-1px);
+            box-shadow: var(--shadow-md);
+        }
+
+        .category-chip.active {
+            background: var(--primary);
+            border-color: var(--primary);
+            color: white;
+            box-shadow: var(--shadow-md);
+        }
+
+        /* Gallery Grid */
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 0rem;
+            margin-bottom: 2rem;
+        }
+
+        .gallery-item {
+            position: relative;
+            border-radius: 0;
+            overflow: hidden;
+            background: white;
+            transition: var(--transition);
+            box-shadow: var(--shadow-sm);
+            margin: 0;
+            padding: 0;
+            cursor: pointer;
+            z-index: 1;
+        }
+
+        .gallery-item * {
+            cursor: pointer !important;
+            position: relative;
+            z-index: 2;
+        }
+
+        .gallery-item:hover {
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .gallery-item.loading {
+            background: var(--gray-200);
+            animation: pulse 1.5s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.7; }
+        }
+
+        .gallery-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: var(--transition);
+        }
+
+        .gallery-item:hover .gallery-image {
+            transform: scale(1.05);
+        }
+
+        .gallery-overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(to top, rgba(0,0,0,0.7) 0%, transparent 100%);
+            padding: 1rem;
+            opacity: 0;
+            transition: var(--transition);
+        }
+
+        .gallery-item:hover .gallery-overlay {
+            opacity: 1;
+        }
+
+        .gallery-category {
+            color: white;
+            font-size: 0.8rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        /* Lightbox */
+        .lightbox {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0,0,0,0.9);
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            visibility: hidden;
+            transition: var(--transition);
+        }
+
+        .lightbox.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .lightbox-content {
+            position: relative;
+            max-width: 90%;
+            max-height: 90%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .lightbox-image {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
+            border-radius: var(--border-radius-sm);
+        }
+
+        .lightbox-nav {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(255,255,255,0.1);
+            border: none;
+            color: white;
+            font-size: 1.5rem;
+            padding: 1rem;
+            cursor: pointer;
+            transition: var(--transition);
+            border-radius: 50%;
+            backdrop-filter: blur(10px);
+        }
+
+        .lightbox-nav:hover {
+            background: rgba(255,255,255,0.2);
+        }
+
+        .lightbox-prev {
+            left: 1rem;
+        }
+
+        .lightbox-next {
+            right: 1rem;
+        }
+
+        .lightbox-close {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background: rgba(255,255,255,0.1);
+            border: none;
+            color: white;
+            font-size: 1.5rem;
+            width: 50px;
+            height: 50px;
+            cursor: pointer;
+            transition: var(--transition);
+            border-radius: 50%;
+            backdrop-filter: blur(10px);
+        }
+
+        .lightbox-close:hover {
+            background: rgba(255,255,255,0.2);
+        }
+
+        .lightbox-actions {
+            position: absolute;
+            bottom: 1rem;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 1rem;
+        }
+
+        .lightbox-action {
+            background: rgba(255,255,255,0.1);
+            border: none;
+            color: white;
+            padding: 0.75rem 1.5rem;
+            cursor: pointer;
+            transition: var(--transition);
+            border-radius: 25px;
+            backdrop-filter: blur(10px);
+            font-size: 0.9rem;
+        }
+
+        .lightbox-action:hover {
+            background: rgba(255,255,255,0.2);
+        }
+
+        /* Back to Top Button */
+        .back-to-top {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            background: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: var(--transition);
+            box-shadow: var(--shadow-md);
+            opacity: 0;
+            visibility: hidden;
+            z-index: 99;
+        }
+
+        .back-to-top.visible {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .back-to-top:hover {
+            background: var(--accent);
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        /* Loading Indicator */
+        .loading-indicator {
+            text-align: center;
+            padding: 2rem;
+            color: var(--gray-600);
+        }
+
+        .loading-spinner {
+            display: inline-block;
+            width: 40px;
+            height: 40px;
+            border: 3px solid var(--gray-200);
+            border-top: 3px solid var(--primary);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .gallery-container {
+                padding-top: 150px;
+                padding: 0 0.75rem;
+            }
+            
+            .gallery-header {
+                top: 70px;
+            }
+            
+            .gallery-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 0.5rem;
+            }
+
+            .lightbox {
+                padding: 0;
+                align-items: center;
+                justify-content: center;
+            }
+            
+            .lightbox-content {
+                max-width: 100%;
+                max-height: 100%;
+                width: 100%;
+                height: 100vh;
+                justify-content: center;
+                align-items: center;
+            }
+
+            .lightbox-image {
+                max-height: 85vh;
+                max-width: 95vw;
+                width: auto;
+                height: auto;
+                object-fit: contain;
+                margin: auto;
+            }
+
+            .lightbox-close {
+                top: 10px;
+                right: 10px;
+                background: rgba(255,255,255,0.9);
+                color: #000;
+                font-size: 28px;
+                width: 45px;
+                height: 45px;
+                z-index: 1001;
+            }
+
+            .lightbox-actions {
+                position: fixed;
+                bottom: 20px;
+                left: 50%;
+                transform: translateX(-50%);
+                gap: 0.5rem;
+            }
+
+            .lightbox-action {
+                padding: 0.5rem 1rem;
+                font-size: 0.8rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .gallery-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 0.5rem;
+            }
+
+            .gallery-top-bar {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .gallery-search {
+                justify-content: center;
+            }
+
+            .category-chip {
+                padding: 0.4rem 0.8rem;
+                font-size: 0.8rem;
+            }
+        }
+
+        @media (min-width: 1200px) {
+            .gallery-grid {
+                grid-template-columns: repeat(4, 1fr);
+                gap: 1.25rem;
+            }
+        }
+
+        @media (min-width: 1400px) {
+            .gallery-grid {
+                grid-template-columns: repeat(5, 1fr);
+            }
+        }
+
+        @media (min-width: 1600px) {
+            .gallery-grid {
+                grid-template-columns: repeat(6, 1fr);
+            }
+        }
+
+        /* Accessibility */
+        .gallery-item:focus-visible {
+            outline: 3px solid var(--accent);
+            outline-offset: 2px;
+        }
+
+        .category-chip:focus-visible {
+            outline: 3px solid var(--accent);
+            outline-offset: 2px;
+        }
+
+        /* Touch support */
+        @media (hover: none) {
+            .gallery-overlay {
+                opacity: 1;
+                background: linear-gradient(to top, rgba(0,0,0,0.5) 0%, transparent 100%);
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header will be loaded by JavaScript -->
+    
+    <!-- Gallery Header -->
+    <header class="gallery-header">
+        <div class="gallery-header-container">
+            <div class="gallery-top-bar">
+                <h1 class="gallery-title">Project Gallery</h1>
+                <div class="gallery-search">
+                    <input type="text" class="search-input" placeholder="Search images..." id="searchInput">
+                    <button class="search-btn" aria-label="Search">
+                        <i class="fas fa-search"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Sticky Category Filter -->
+    <div class="category-filter-wrapper">
+        <div class="category-filter" id="categoryFilter">
+            <button class="category-chip active" data-category="all">All Photos</button>
+            <button class="category-chip" data-category="pergola">Pergola</button>
+            <button class="category-chip" data-category="building">Building</button>
+            <button class="category-chip" data-category="interior">Interior</button>
+            <button class="category-chip" data-category="doors">Doors</button>
+            <button class="category-chip" data-category="wardrobe">Wardrobe</button>
+            <button class="category-chip" data-category="kitchen">Kitchen</button>
+            <button class="category-chip" data-category="wood">Wood House</button>
+            <button class="category-chip" data-category="cladding">Cladding</button>
+            <button class="category-chip" data-category="flooring">Flooring</button>
+            <button class="category-chip" data-category="balustrade">Balustrade</button>
+        </div>
+    </div>
+
+    <!-- Main Gallery -->
+    <main class="gallery-container">
+        <div class="gallery-grid" id="galleryGrid">
+            <!-- Gallery items will be dynamically loaded here -->
+        </div>
+        
+        <div class="loading-indicator" id="loadingIndicator" style="display: none;">
+            <div class="loading-spinner"></div>
+            <p>Loading more images...</p>
+        </div>
+    </main>
+
+    <!-- Lightbox -->
+    <div class="lightbox" id="lightbox">
+        <div class="lightbox-content">
+            <img src="" alt="" class="lightbox-image" id="lightboxImage">
+            <button class="lightbox-nav lightbox-prev" id="lightboxPrev">
+                <i class="fas fa-chevron-left"></i>
+            </button>
+            <button class="lightbox-nav lightbox-next" id="lightboxNext">
+                <i class="fas fa-chevron-right"></i>
+            </button>
+            <button class="lightbox-close" id="lightboxClose">
+                <i class="fas fa-times"></i>
+            </button>
+            <div class="lightbox-actions">
+                <button class="lightbox-action" id="lightboxShare">
+                    <i class="fas fa-share"></i> Share
+                </button>
+                <button class="lightbox-action" id="lightboxDownload">
+                    <i class="fas fa-download"></i> Download
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Back to Top Button -->
+    <button class="back-to-top" id="backToTop" aria-label="Back to top">
+        <i class="fas fa-arrow-up"></i>
+    </button>
+
+    <script>
+        // Gallery Data - Add your images here for each category
+        const galleryData = {
+            // Pergola Category - Add 47 images
+            pergola: [
+                { src: 'images/gallery/pergolar/balustrade (5).jpeg', category: 'pergola' },
+                { src: 'images/gallery/pergolar/carport/pergolar (21).jpeg', category: 'pergola' },
+                { src: 'images/gallery/pergolar/pergola1 (3).jpeg', category: 'pergola' },
+           
+                { src: 'images/gallery/pergolar/carport/wood (9).jpeg', category: 'pergola' },
+                { src: 'images/gallery/pergolar/carport/pergolar (19).jpeg', category: 'pergola' },
+                { src: 'images/gallery/pergolar/balustrade (3).jpeg', category: 'pergola' },
+                { src: 'images/gallery/pergolar/balustrade (4).jpeg', category: 'pergola' },
+                
+
+                { src: 'images/gallery/pergolar/pergola1 (1).jpeg', category: 'pergola' },
+                { src: 'images/gallery/pergolar/pergola1 (2).jpeg', category: 'pergola' },
+               
+                { src: 'images/gallery/pergolar/pergola1 (4).jpeg', category: 'pergola' },
+                { src: 'images/gallery/pergolar/pergola1 (5).jpeg', category: 'pergola' },
+                { src: 'images/gallery/pergolar/pergola1 (6).jpeg', category: 'pergola' },
+                     { src: 'images/gallery/pergolar/carport/pergolar (83).jpeg', category: 'pergola' },
+                { src: 'images/gallery/pergolar/pergola1 (7).jpeg', category: 'pergola' },
+                { src: 'images/gallery/pergolar/pergola1 (8).jpeg', category: 'pergola' },
+                { src: 'images/gallery/pergolar/pergola1 (9).jpeg', category: 'pergola' },
+                { src: 'images/gallery/pergolar/pergola1 (10).jpeg', category: 'pergola' },
+                { src: 'images/gallery/pergolar/pergola1 (11).jpeg', category: 'pergola' },
+                { src: 'images/gallery/pergolar/pergola1 (12).jpeg', category: 'pergola' },
+                { src: 'images/gallery/pergolar/pergola1 (14).jpeg', category: 'pergola' },
+
+                { src: 'images/gallery/pergolar/pergolar (4).jpeg', category: 'pergola' },
+                { src: 'images/gallery/pergolar/pergolar (7).jpeg', category: 'pergola' },
+                { src: 'images/gallery/pergolar/pergolar (8).jpeg', category: 'pergola' },
+                { src: 'images/gallery/pergolar/pergolar (9).jpeg', category: 'pergola' },
+                { src: 'images/gallery/pergolar/pergolar (10).jpeg', category: 'pergola' },
+                { src: 'images/gallery/pergolar/pergolar (11).jpeg', category: 'pergola' },
+                { src: 'images/gallery/pergolar/pergolar (12).jpeg', category: 'pergola' },
+                { src: 'images/gallery/pergolar/pergolar (13).jpeg', category: 'pergola' },
+                { src: 'images/gallery/pergolar/pergolar (14).jpeg', category: 'pergola' },
+                { src: 'images/gallery/pergolar/pergolar (16).jpeg', category: 'pergola' },
+                { src: 'images/gallery/pergolar/pergolar (18).jpeg', category: 'pergola' },
+                { src: 'images/gallery/pergolar/pergolar (20).jpeg', category: 'pergola' },
+                { src: 'images/gallery/pergolar/pergolar (22).jpeg', category: 'pergola' },
+                { src: 'images/gallery/pergolar/pergolar (23).jpeg', category: 'pergola' },
+                { src: 'images/gallery/pergolar/pergolar (24).jpeg', category: 'pergola' },
+                { src: 'images/gallery/pergolar/pergolar (25).jpeg', category: 'pergola' },
+                { src: 'images/gallery/pergolar/pergolar (26).jpeg', category: 'pergola' },
+                { src: 'images/gallery/pergolar/pergolar (27).jpeg', category: 'pergola' },
+                { src: 'images/gallery/pergolar/pergolar (28).jpeg', category: 'pergola' },
+                { src: 'images/gallery/pergolar/pergolar (29).jpeg', category: 'pergola' },
+                { src: 'images/gallery/pergolar/pergolar (30).jpeg', category: 'pergola' },
+                { src: 'images/gallery/pergolar/pergolar (32).jpeg', category: 'pergola' },
+                { src: 'images/gallery/pergolar/pergolar (33).jpeg', category: 'pergola' },
+                { src: 'images/gallery/pergolar/pergolar (34).jpeg', category: 'pergola' },
+                { src: 'images/gallery/pergolar/pergolar (35).jpeg', category: 'pergola' },
+                { src: 'images/gallery/pergolar/pergolar (37).jpeg', category: 'pergola' },
+                { src: 'images/gallery/pergolar/pergolar (39).jpeg', category: 'pergola' },
+
+                { src: 'images/gallery/pergolar/pergolar (77).jpeg', category: 'pergola' },
+                { src: 'images/gallery/pergolar/pergolar (78).jpeg', category: 'pergola' },
+                { src: 'images/gallery/pergolar/pergolar (79).jpeg', category: 'pergola' },
+                { src: 'images/gallery/pergolar/pergolar (80).jpeg', category: 'pergola' },
+                { src: 'images/gallery/pergolar/pergolar (84).jpeg', category: 'pergola' },
+                { src: 'images/gallery/pergolar/pergolar (85).jpeg', category: 'pergola' },
+                { src: 'images/gallery/pergolar/pergolar (86).jpeg', category: 'pergola' },
+                { src: 'images/gallery/pergolar/pergolar (87).jpeg', category: 'pergola' },
+                { src: 'images/gallery/pergolar/pergolar (88).jpeg', category: 'pergola' },
+                { src: 'images/gallery/pergolar/pergolar (89).jpeg', category: 'pergola' },
+                { src: 'images/gallery/pergolar/pergolar (90).jpeg', category: 'pergola' },
+                { src: 'images/gallery/pergolar/pergolar (91).jpeg', category: 'pergola' },
+
+                { src: 'images/gallery/pergolar/roofing-1.jpeg', category: 'pergola' },
+
+                { src: 'images/gallery/pergolar/wood (3).jpeg', category: 'pergola' },
+                { src: 'images/gallery/pergolar/wood (4).jpeg', category: 'pergola' },
+                { src: 'images/gallery/pergolar/wood (5).jpeg', category: 'pergola' },
+                { src: 'images/gallery/pergolar/wood (8).jpeg', category: 'pergola' },
+                { src: 'images/gallery/pergolar/wood (10).jpeg', category: 'pergola' },
+
+            ],
+
+            // Building Construction Category - Add 30 images
+            building: [
+                { src: 'images/gallery/building-construction/build (3).jpeg', category: 'building' },
+                { src: 'images/gallery/building-construction/build (4).jpeg', category: 'building' },
+                { src: 'images/gallery/building-construction/build (5).jpeg', category: 'building' },
+                { src: 'images/gallery/building-construction/build (6).jpeg', category: 'building' },
+                { src: 'images/gallery/building-construction/build (7).jpeg', category: 'building' },
+                { src: 'images/gallery/building-construction/build (8).jpeg', category: 'building' },
+                { src: 'images/gallery/building-construction/build (9).jpeg', category: 'building' },
+                { src: 'images/gallery/building-construction/build (10).jpeg', category: 'building' },
+                { src: 'images/gallery/building-construction/build (11).jpeg', category: 'building' },
+                { src: 'images/gallery/building-construction/build (12).jpeg', category: 'building' },
+                { src: 'images/gallery/building-construction/build (13).jpeg', category: 'building' },
+                { src: 'images/gallery/building-construction/build (14).jpeg', category: 'building' },
+                { src: 'images/gallery/building-construction/build (15).jpeg', category: 'building' },
+                { src: 'images/gallery/building-construction/build (16).jpeg', category: 'building' },
+                { src: 'images/gallery/building-construction/build (17).jpeg', category: 'building' },
+                { src: 'images/gallery/building-construction/build (18).jpeg', category: 'building' },
+                { src: 'images/gallery/building-construction/build (19).jpeg', category: 'building' },
+                { src: 'images/gallery/building-construction/build (22).jpeg', category: 'building' },
+                { src: 'images/gallery/building-construction/build (23).jpeg', category: 'building' },
+                { src: 'images/gallery/building-construction/build (28).jpeg', category: 'building' },
+                { src: 'images/gallery/building-construction/build (32).jpeg', category: 'building' },
+
+                { src: 'images/gallery/building-construction/pergolar (42).jpeg', category: 'building' },
+                { src: 'images/gallery/building-construction/pergolar (43).jpeg', category: 'building' },
+                { src: 'images/gallery/building-construction/pergolar (44).jpeg', category: 'building' },
+                { src: 'images/gallery/building-construction/pergolar (45).jpeg', category: 'building' },
+                { src: 'images/gallery/building-construction/pergolar (46).jpeg', category: 'building' },
+                { src: 'images/gallery/building-construction/pergolar (47).jpeg', category: 'building' },
+                { src: 'images/gallery/building-construction/pergolar (49).jpeg', category: 'building' },
+                { src: 'images/gallery/building-construction/pergolar (52).jpeg', category: 'building' },
+                { src: 'images/gallery/building-construction/pergolar (54).jpeg', category: 'building' },
+                { src: 'images/gallery/building-construction/pergolar (60).jpeg', category: 'building' },
+                { src: 'images/gallery/building-construction/pergolar (70).jpeg', category: 'building' },
+                { src: 'images/gallery/building-construction/pergolar (71).jpeg', category: 'building' },
+                { src: 'images/gallery/building-construction/pergolar (73).jpeg', category: 'building' },
+                { src: 'images/gallery/building-construction/pergolar (74).jpeg', category: 'building' },
+                { src: 'images/gallery/building-construction/pergolar (75).jpeg', category: 'building' },
+                { src: 'images/gallery/building-construction/pergolar (76).jpeg', category: 'building' },
+
+            ],
+
+            // Interior Designs Category - Add 50 images
+            interior: [
+                { src: 'images/gallery/interior/interior-32.jpeg', category: 'interior' },
+                { src: 'images/gallery/interior/interior-41.jpeg', category: 'interior' },
+                { src: 'images/gallery/interior/interior-42.jpeg', category: 'interior' },
+                { src: 'images/gallery/interior/interior-46.jpeg', category: 'interior' },
+                { src: 'images/gallery/interior/interior-53.jpeg', category: 'interior' },
+                { src: 'images/gallery/interior/interior-59.jpeg', category: 'interior' },
+                { src: 'images/gallery/interior/interior-61.jpeg', category: 'interior' },
+                { src: 'images/gallery/interior/interior-84.jpeg', category: 'interior' },
+                { src: 'images/gallery/interior/closet/interior-29.jpeg', category: 'interior' },
+                { src: 'images/gallery/interior/closet/interior-81.jpeg', category: 'interior' },
+
+            ],
+
+            // Wooden Door Category - Add 38 images
+            doors: [
+                { src: 'images/gallery/doors/door (1).jpeg', category: 'doors' },
+                { src: 'images/gallery/doors/door (2).jpeg', category: 'doors' },
+                { src: 'images/gallery/doors/door (4).jpeg', category: 'doors' },
+                { src: 'images/gallery/doors/door (5).jpeg', category: 'doors' },
+                { src: 'images/gallery/doors/door (6).jpeg', category: 'doors' },
+                { src: 'images/gallery/doors/door (8).jpeg', category: 'doors' },
+                { src: 'images/gallery/doors/door (9).jpeg', category: 'doors' },
+                { src: 'images/gallery/doors/door (10).jpeg', category: 'doors' },
+                { src: 'images/gallery/doors/door (11).jpeg', category: 'doors' },
+                { src: 'images/gallery/doors/door (12).jpeg', category: 'doors' },
+                { src: 'images/gallery/doors/door (13).jpeg', category: 'doors' },
+                { src: 'images/gallery/doors/door (14).jpeg', category: 'doors' },
+                { src: 'images/gallery/doors/door (15).jpeg', category: 'doors' },
+                { src: 'images/gallery/doors/door (16).jpeg', category: 'doors' },
+                { src: 'images/gallery/doors/door (17).jpeg', category: 'doors' },
+                { src: 'images/gallery/doors/door (18).jpeg', category: 'doors' },
+                { src: 'images/gallery/doors/door (20).jpeg', category: 'doors' },
+                { src: 'images/gallery/doors/door (22).jpeg', category: 'doors' },
+                { src: 'images/gallery/doors/door (24).jpeg', category: 'doors' },
+                { src: 'images/gallery/doors/door (25).jpeg', category: 'doors' },
+                { src: 'images/gallery/doors/door (26).jpeg', category: 'doors' },
+                { src: 'images/gallery/doors/door (27).jpeg', category: 'doors' },
+                { src: 'images/gallery/doors/door (28).jpeg', category: 'doors' },
+                { src: 'images/gallery/doors/door (30).jpeg', category: 'doors' },
+                { src: 'images/gallery/doors/door (32).jpeg', category: 'doors' },
+                { src: 'images/gallery/doors/door (33).jpeg', category: 'doors' },
+                { src: 'images/gallery/doors/door (35).jpeg', category: 'doors' },
+                { src: 'images/gallery/doors/door (36).jpeg', category: 'doors' },
+                { src: 'images/gallery/doors/door (37).jpeg', category: 'doors' },
+                { src: 'images/gallery/doors/door (38).jpeg', category: 'doors' },
+                { src: 'images/gallery/doors/door (39).jpeg', category: 'doors' },
+                { src: 'images/gallery/doors/door (40).jpeg', category: 'doors' },
+                { src: 'images/gallery/doors/door (41).jpeg', category: 'doors' },
+                { src: 'images/gallery/doors/door (42).jpeg', category: 'doors' },
+                { src: 'images/gallery/doors/door (43).jpeg', category: 'doors' },
+                { src: 'images/gallery/doors/door (44).jpeg', category: 'doors' },
+                { src: 'images/gallery/doors/door (45).jpeg', category: 'doors' },
+                { src: 'images/gallery/doors/door (46).jpeg', category: 'doors' },
+                { src: 'images/gallery/doors/door (47).jpeg', category: 'doors' },
+                { src: 'images/gallery/doors/door (48).jpeg', category: 'doors' },
+                { src: 'images/gallery/doors/door (49).jpeg', category: 'doors' },
+                { src: 'images/gallery/doors/door (50).jpeg', category: 'doors' },
+                { src: 'images/gallery/doors/door (51).jpeg', category: 'doors' },
+                { src: 'images/gallery/doors/door (52).jpeg', category: 'doors' },
+                { src: 'images/gallery/doors/door (53).jpeg', category: 'doors' },
+                { src: 'images/gallery/doors/door (54).jpeg', category: 'doors' },
+                { src: 'images/gallery/doors/door (55).jpeg', category: 'doors' },
+                { src: 'images/gallery/doors/door (56).jpeg', category: 'doors' },
+                { src: 'images/gallery/doors/door (58).jpeg', category: 'doors' },
+                { src: 'images/gallery/doors/door (64).jpeg', category: 'doors' },
+
+            ],
+
+            // Wood House Category - Add 12 images
+            wood: [
+                { src: 'images/gallery/woodhouse/build (24).jpeg', category: 'woodhouse' },
+                { src: 'images/gallery/woodhouse/build (26).jpeg', category: 'woodhouse' },
+
+                { src: 'images/gallery/woodhouse/pergolar (55).jpeg', category: 'woodhouse' },
+                { src: 'images/gallery/woodhouse/pergolar (58).jpeg', category: 'woodhouse' },
+
+            ],
+
+            // Wall Cladding Category - Add 15 images
+            cladding: [
+                { src: 'images/gallery/cladding/cabinet (1).jpeg', category: 'cladding' },
+                { src: 'images/gallery/cladding/interior-30.jpeg', category: 'cladding' },
+                { src: 'images/gallery/cladding/wall (1).jpeg', category: 'cladding' },
+                { src: 'images/gallery/cladding/wall (3).jpeg', category: 'cladding' },
+
+            ],
+
+            // Floor Decking Category - Add 18 images
+            flooring: [
+                { src: 'images/gallery/floor-decking/floor (1).jpeg', category: 'floor-decking' },
+                { src: 'images/gallery/floor-decking/floor (2).jpeg', category: 'floor-decking' },
+                { src: 'images/gallery/floor-decking/floor (3).jpeg', category: 'floor-decking' },
+                { src: 'images/gallery/floor-decking/floor (4).jpeg', category: 'floor-decking' },
+                { src: 'images/gallery/floor-decking/floor (6).jpeg', category: 'floor-decking' },
+                { src: 'images/gallery/floor-decking/floor (9).jpeg', category: 'floor-decking' },
+                { src: 'images/gallery/floor-decking/floor (10).jpeg', category: 'floor-decking' },
+                { src: 'images/gallery/floor-decking/floor (11).jpeg', category: 'floor-decking' },
+
+            ],
+
+            // Stairs and Balustrade Category - Add 25 images
+            balustrade: [
+                { src: 'images/gallery/balustrade-stairs/balustrade (2).jpeg', category: 'balustrade-stairs' },
+                { src: 'images/gallery/balustrade-stairs/balustrade (6).jpeg', category: 'balustrade-stairs' },
+                { src: 'images/gallery/balustrade-stairs/balustrade (9).jpeg', category: 'balustrade-stairs' },
+                { src: 'images/gallery/balustrade-stairs/balustrade (12).jpeg', category: 'balustrade-stairs' },
+                { src: 'images/gallery/balustrade-stairs/balustrade (13).jpeg', category: 'balustrade-stairs' },
+
+                { src: 'images/gallery/balustrade-stairs/floor (5).jpeg', category: 'balustrade-stairs' },
+                { src: 'images/gallery/balustrade-stairs/floor (7).jpeg', category: 'balustrade-stairs' },
+                { src: 'images/gallery/balustrade-stairs/floor (8).jpeg', category: 'balustrade-stairs' },
+
+            ],
+
+            // Wardrobe & Closet Category - Add 20 images
+            wardrobe: [
+                { src: 'images/gallery/interior/Wardrobe/cabinet (3).jpeg', category: 'wardrobe' },
+                { src: 'images/gallery/interior/Wardrobe/interior-24.jpeg', category: 'wardrobe' },
+                { src: 'images/gallery/interior/Wardrobe/kitchen (2).jpeg', category: 'wardrobe' },
+                { src: 'images/gallery/interior/Wardrobe/kitchen (8).jpeg', category: 'wardrobe' },
+
+              
+            ],
+
+            // Kitchen Cabinets Category - Add 18 images
+            kitchen: [
+                { src: 'images/gallery/interior/Kitchen Cabinet/closet1 (1).jpeg', category: 'kitchen-cabinet' },
+                { src: 'images/gallery/interior/Kitchen Cabinet/closet1 (2).jpeg', category: 'kitchen-cabinet' },
+                { src: 'images/gallery/interior/Kitchen Cabinet/closet1 (4).jpeg', category: 'kitchen-cabinet' },
+                { src: 'images/gallery/interior/Kitchen Cabinet/closet1 (9).jpeg', category: 'kitchen-cabinet' },
+                { src: 'images/gallery/interior/Kitchen Cabinet/closet1 (10).jpeg', category: 'kitchen-cabinet' },
+                { src: 'images/gallery/interior/Kitchen Cabinet/closet1 (11).jpeg', category: 'kitchen-cabinet' },
+                { src: 'images/gallery/interior/Kitchen Cabinet/closet1 (13).jpeg', category: 'kitchen-cabinet' },
+
+                { src: 'images/gallery/interior/Kitchen Cabinet/interior-1.jpeg', category: 'kitchen-cabinet' },
+                { src: 'images/gallery/interior/Kitchen Cabinet/interior-2.jpeg', category: 'kitchen-cabinet' },
+                { src: 'images/gallery/interior/Kitchen Cabinet/interior-6.jpeg', category: 'kitchen-cabinet' },
+                { src: 'images/gallery/interior/Kitchen Cabinet/interior-7.jpeg', category: 'kitchen-cabinet' },
+                { src: 'images/gallery/interior/Kitchen Cabinet/interior-10.jpeg', category: 'kitchen-cabinet' },
+                { src: 'images/gallery/interior/Kitchen Cabinet/interior-17.jpeg', category: 'kitchen-cabinet' },
+                { src: 'images/gallery/interior/Kitchen Cabinet/interior-19.jpeg', category: 'kitchen-cabinet' },
+                { src: 'images/gallery/interior/Kitchen Cabinet/interior-36.jpeg', category: 'kitchen-cabinet' },
+                { src: 'images/gallery/interior/Kitchen Cabinet/interior-37.jpeg', category: 'kitchen-cabinet' },
+                { src: 'images/gallery/interior/Kitchen Cabinet/interior-52.jpeg', category: 'kitchen-cabinet' },
+                { src: 'images/gallery/interior/Kitchen Cabinet/interior-55.jpeg', category: 'kitchen-cabinet' },
+                { src: 'images/gallery/interior/Kitchen Cabinet/interior-57.jpeg', category: 'kitchen-cabinet' },
+                { src: 'images/gallery/interior/Kitchen Cabinet/interior-62.jpeg', category: 'kitchen-cabinet' },
+                { src: 'images/gallery/interior/Kitchen Cabinet/interior-64.jpeg', category: 'kitchen-cabinet' },
+                { src: 'images/gallery/interior/Kitchen Cabinet/interior-76.jpeg', category: 'kitchen-cabinet' },
+                { src: 'images/gallery/interior/Kitchen Cabinet/interior-77.jpeg', category: 'kitchen-cabinet' },
+                { src: 'images/gallery/interior/Kitchen Cabinet/interior-85.jpeg', category: 'kitchen-cabinet' },
+
+            ]
+        };
+
+        // Gallery State
+        let currentCategory = 'all';
+        let currentImages = [];
+        let currentImageIndex = 0;
+        let isLoading = false;
+        let imagesPerPage = 20;
+        let currentOffset = 0;
+
+        // Lightbox elements (same pattern as index.html)
+        const lightbox = document.getElementById('lightbox');
+        const lightboxImage = document.getElementById('lightboxImage');
+        const lightboxClose = document.getElementById('lightboxClose');
+        const lightboxDownload = document.getElementById('lightboxDownload');
+        const lightboxShare = document.getElementById('lightboxShare');
+
+        // Initialize Gallery
+        document.addEventListener('DOMContentLoaded', function() {
+            initializeGallery();
+            setupEventListeners();
+            
+            // Check for category parameter in URL
+            const urlParams = new URLSearchParams(window.location.search);
+            const categoryParam = urlParams.get('category');
+            
+            if (categoryParam) {
+                // Convert category name to data-category format
+                const categoryMap = {
+                    'Pergola': 'pergola',
+                    'Building Construction': 'building',
+                    'Interior Designs': 'interior',
+                    'Wooden Door': 'doors',
+                    'Wood House': 'wood',
+                    'Wall Cladding': 'cladding',
+                    'Floor Decking': 'flooring',
+                    'Stairs and Balustrade': 'balustrade',
+                    'Wardrobe & Closet': 'wardrobe',
+                    'Kitchen Cabinets': 'kitchen'
+                };
+                
+                const category = categoryMap[categoryParam] || 'all';
+                setActiveCategory(category);
+                loadImages(category, 0);
+            } else {
+                loadImages('all', 0);
+            }
+        });
+
+        function initializeGallery() {
+            // Flatten all images for "all" category
+            const allImages = Object.values(galleryData).flat();
+            
+            // Advanced category mixing to prevent clustering
+            currentImages = mixCategories(allImages);
+            
+            // Store the original shuffled all images for later use
+            window.allPhotosImages = [...currentImages];
+            
+            // Also shuffle each category individually
+            Object.keys(galleryData).forEach(category => {
+                shuffleArray(galleryData[category]);
+            });
+        }
+
+        // Advanced function to mix categories and prevent clustering
+        function mixCategories(images) {
+            // Simple approach: just shuffle multiple times for true randomness
+            let result = [...images];
+            
+            // Shuffle many times to ensure complete randomness
+            for (let i = 0; i < 10; i++) {
+                shuffleArray(result);
+            }
+            
+            // Additional randomization: Fisher-Yates with multiple passes
+            for (let pass = 0; pass < 5; pass++) {
+                for (let i = result.length - 1; i > 0; i--) {
+                    const j = Math.floor(Math.random() * (i + 1));
+                    const k = Math.floor(Math.random() * (i + 1));
+                    // Triple swap for maximum randomness
+                    [result[i], result[j], result[k]] = [result[k], result[i], result[j]];
+                }
+            }
+            
+            // One final shuffle
+            shuffleArray(result);
+            
+            return result;
+        }
+
+        // Utility function to shuffle array randomly
+        function shuffleArray(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]];
+            }
+            return array;
+        }
+
+        function setupEventListeners() {
+            // Category filter
+            document.querySelectorAll('.category-chip').forEach(chip => {
+                chip.addEventListener('click', function() {
+                    const category = this.dataset.category;
+                    setActiveCategory(category);
+                    loadImages(category, 0);
+                });
+            });
+
+            // Search
+            const searchInput = document.getElementById('searchInput');
+            searchInput.addEventListener('input', debounce(function() {
+                searchImages(this.value);
+            }, 300));
+
+            // Lightbox opening – mirror index.html pattern but for .gallery-image
+            document.addEventListener('click', function(e) {
+                const galleryImage = e.target.closest('.gallery-image');
+                if (!galleryImage) return;
+
+                console.log('[GALLERY] Image clicked:', galleryImage.src);
+
+                // Prevent default if inside a link
+                if (e.preventDefault) e.preventDefault();
+
+                if (!Array.isArray(currentImages) || currentImages.length === 0) {
+                    console.warn('[GALLERY] currentImages is empty or not set');
+                    return;
+                }
+
+                const rawFilename = galleryImage.getAttribute('src') || galleryImage.src;
+                const domFilename = decodeURIComponent(rawFilename.split('/').pop());
+                console.log('[GALLERY] Looking for filename in currentImages:', domFilename, 'Total images:', currentImages.length);
+
+                const index = currentImages.findIndex(img => {
+                    const imgFilename = img.src.split('/').pop();
+                    return imgFilename === domFilename;
+                });
+                if (index === -1) {
+                    console.warn('[GALLERY] No match found in currentImages for', domFilename);
+                    return;
+                }
+
+                console.log('[GALLERY] Match found at index:', index, 'Image object:', currentImages[index]);
+                const image = currentImages[index];
+                openLightbox(image, index);
+            });
+
+            // Lightbox
+            document.getElementById('lightboxClose').addEventListener('click', closeLightbox);
+            document.getElementById('lightboxPrev').addEventListener('click', showPrevImage);
+            document.getElementById('lightboxNext').addEventListener('click', showNextImage);
+            document.getElementById('lightboxShare').addEventListener('click', shareImage);
+            document.getElementById('lightboxDownload').addEventListener('click', downloadImage);
+
+            // Close lightbox on background click
+            document.getElementById('lightbox').addEventListener('click', function(e) {
+                if (e.target === this) {
+                    closeLightbox();
+                }
+            });
+
+            // Keyboard navigation
+            document.addEventListener('keydown', function(e) {
+                if (document.getElementById('lightbox').classList.contains('active')) {
+                    if (e.key === 'Escape') closeLightbox();
+                    if (e.key === 'ArrowLeft') showPrevImage();
+                    if (e.key === 'ArrowRight') showNextImage();
+                }
+            });
+
+            // Back to top button
+            const backToTop = document.getElementById('backToTop');
+            window.addEventListener('scroll', function() {
+                if (window.pageYOffset > 300) {
+                    backToTop.classList.add('visible');
+                } else {
+                    backToTop.classList.remove('visible');
+                }
+            });
+
+            backToTop.addEventListener('click', function() {
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            });
+
+            // Infinite scroll
+            window.addEventListener('scroll', debounce(function() {
+                if (window.innerHeight + window.scrollY >= document.body.offsetHeight - 1000) {
+                    loadMoreImages();
+                }
+            }, 200));
+
+            // Touch support for lightbox
+            let touchStartX = 0;
+            let touchEndX = 0;
+
+            document.getElementById('lightbox').addEventListener('touchstart', function(e) {
+                touchStartX = e.changedTouches[0].screenX;
+            });
+
+            document.getElementById('lightbox').addEventListener('touchend', function(e) {
+                touchEndX = e.changedTouches[0].screenX;
+                handleSwipe();
+            });
+
+            function handleSwipe() {
+                if (touchEndX < touchStartX - 50) showNextImage();
+                if (touchEndX > touchStartX + 50) showPrevImage();
+            }
+        }
+
+        function setActiveCategory(category) {
+            document.querySelectorAll('.category-chip').forEach(chip => {
+                chip.classList.remove('active');
+            });
+            document.querySelector(`[data-category="${category}"]`).classList.add('active');
+            currentCategory = category;
+        }
+
+        function loadImages(category, offset = 0) {
+            const galleryGrid = document.getElementById('galleryGrid');
+            const loadingIndicator = document.getElementById('loadingIndicator');
+            
+            if (offset === 0) {
+                galleryGrid.innerHTML = '';
+                currentOffset = 0;
+            }
+
+            loadingIndicator.style.display = 'block';
+            isLoading = true;
+
+            setTimeout(() => {
+                let images = category === 'all' 
+                    ? window.allPhotosImages
+                    : galleryData[category] || [];
+
+                // Apply search filter if exists
+                const searchTerm = document.getElementById('searchInput').value.toLowerCase();
+                if (searchTerm) {
+                    images = images.filter(img => 
+                        img.category.toLowerCase().includes(searchTerm) ||
+                        img.src.toLowerCase().includes(searchTerm)
+                    );
+                }
+
+                // Store all images for navigation
+                currentImages = images;
+
+                const imagesToLoad = images.slice(offset, offset + imagesPerPage);
+                
+                imagesToLoad.forEach((image, batchIndex) => {
+                    const actualIndex = offset + batchIndex;
+                    const item = createGalleryItem(image, actualIndex);
+                    galleryGrid.appendChild(item);
+                    
+                    // Staggered animation
+                    setTimeout(() => {
+                        item.classList.remove('loading');
+                    }, batchIndex * 50);
+                });
+
+                currentOffset = offset + imagesPerPage;
+                loadingIndicator.style.display = 'none';
+                isLoading = false;
+
+                if (imagesToLoad.length === 0 && offset === 0) {
+                    galleryGrid.innerHTML = '<div class="loading-indicator"><p>No images found</p></div>';
+                }
+            }, 500);
+        }
+
+        function loadMoreImages() {
+            if (!isLoading && currentOffset < currentImages.length) {
+                loadImages(currentCategory, currentOffset);
+            }
+        }
+
+        function createGalleryItem(image, index) {
+            const item = document.createElement('div');
+            item.className = 'gallery-item loading';
+            item.tabIndex = 0;
+            item.setAttribute('role', 'button');
+            item.setAttribute('aria-label', `View ${image.category} image ${index + 1}`);
+            
+            const img = document.createElement('img');
+            img.src = image.src;
+            img.alt = `${image.category} project`;
+            img.className = 'gallery-image';
+            img.loading = 'lazy';
+            
+            const overlay = document.createElement('div');
+            overlay.className = 'gallery-overlay';
+            
+            const category = document.createElement('div');
+            category.className = 'gallery-category';
+            category.textContent = image.category;
+            
+            overlay.appendChild(category);
+            item.appendChild(img);
+            item.appendChild(overlay);
+            
+            return item;
+        }
+
+        function searchImages(searchTerm) {
+            loadImages(currentCategory, 0);
+        }
+
+        function openLightbox(image, index) {
+            const lightbox = document.getElementById('lightbox');
+            const lightboxImage = document.getElementById('lightboxImage');
+            
+            currentImageIndex = index;
+            lightboxImage.src = image.src;
+            lightboxImage.alt = image.category;
+
+            // Enable interaction when opening
+            lightbox.style.pointerEvents = 'auto';
+            lightbox.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeLightbox() {
+            const lightbox = document.getElementById('lightbox');
+            lightbox.classList.remove('active');
+
+            // Disable interaction completely when closed
+            lightbox.style.pointerEvents = 'none';
+
+            // Restore body overflow properly
+            document.body.style.overflow = 'auto';
+            
+            // Force a reflow to ensure proper layout restoration
+            void document.body.offsetHeight;
+        }
+
+        function showPrevImage() {
+            if (currentImageIndex > 0) {
+                currentImageIndex--;
+                updateLightboxImage();
+            }
+        }
+
+        function showNextImage() {
+            if (currentImageIndex < currentImages.length - 1) {
+                currentImageIndex++;
+                updateLightboxImage();
+            }
+        }
+
+        function updateLightboxImage() {
+            const lightboxImage = document.getElementById('lightboxImage');
+            const image = currentImages[currentImageIndex];
+            
+            lightboxImage.style.opacity = '0';
+            setTimeout(() => {
+                lightboxImage.src = image.src;
+                lightboxImage.alt = image.category;
+                lightboxImage.style.opacity = '1';
+            }, 200);
+        }
+
+        function shareImage() {
+            const image = currentImages[currentImageIndex];
+            if (navigator.share) {
+                navigator.share({
+                    title: 'Kg Konyark Investment Gallery',
+                    text: `Check out this ${image.category} project`,
+                    url: window.location.href
+                });
+            } else {
+                // Fallback - copy to clipboard
+                navigator.clipboard.writeText(window.location.href);
+                alert('Link copied to clipboard!');
+            }
+        }
+
+        function downloadImage() {
+            const image = currentImages[currentImageIndex];
+            const link = document.createElement('a');
+            link.href = image.src;
+            link.download = `kg-konyark-${image.category}-${currentImageIndex + 1}.jpg`;
+            link.click();
+        }
+
+        function debounce(func, wait) {
+            let timeout;
+            return function executedFunction(...args) {
+                const later = () => {
+                    clearTimeout(timeout);
+                    func(...args);
+                };
+                clearTimeout(timeout);
+                timeout = setTimeout(later, wait);
+            };
+        }
+    </script>
+</body>
+</html>
