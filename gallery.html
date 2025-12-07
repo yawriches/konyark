@@ -304,6 +304,26 @@
             animation: featuredPulse 2s ease-in-out infinite;
         }
 
+        /* Metal Tag Badge */
+        .metal-badge {
+            position: absolute;
+            top: 12px;
+            left: 12px;
+            background: linear-gradient(135deg, #C0C0C0 0%, #808080 100%);
+            color: #000;
+            padding: 0.4rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.7rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            box-shadow: 0 4px 12px rgba(128, 128, 128, 0.4);
+            z-index: 10;
+            display: flex;
+            align-items: center;
+            gap: 0.3rem;
+        }
+
         /* Pricing Button */
         .pricing-button-container {
             max-width: 1400px;
@@ -690,6 +710,7 @@
             <button class="category-chip" data-category="kitchen">Kitchen</button>
             <button class="category-chip" data-category="flooring">Flooring</button>
             <button class="category-chip" data-category="balustrade">Balustrade</button>
+            <button class="category-chip" data-category="other">Other</button>
         </div>
     </div>
 
@@ -748,6 +769,7 @@
             // Pergola Category - Add 47 images
             pergola: [
                 { src: 'images/gallery/pergolar/carport/wood (9).jpeg', category: 'pergola', featured: true, featuredOrder: 2 },
+                { src: 'images/gallery/pergolar/metalpergola.jpg', category: 'pergola', metal: true, fixedPosition: true },
                 { src: 'images/gallery/pergolar/balustrade (5).jpeg', category: 'pergola' },
                 { src: 'images/gallery/pergolar/carport/pergolar (21).jpeg', category: 'pergola' },
                 { src: 'images/gallery/pergolar/pergola1 (3).jpeg', category: 'pergola' },
@@ -932,6 +954,11 @@
                 { src: 'images/gallery/doors/door (56).jpeg', category: 'doors' },
                 { src: 'images/gallery/doors/door (58).jpeg', category: 'doors' },
                 { src: 'images/gallery/doors/door (64).jpeg', category: 'doors' },
+                { src: 'images/gallery/doors/door1.jpg', category: 'doors' },
+                { src: 'images/gallery/doors/door2.jpg', category: 'doors' },
+                { src: 'images/gallery/doors/door3.jpg', category: 'doors' },
+                { src: 'images/gallery/doors/door4.jpg', category: 'doors', featured: true, featuredOrder: 4 },
+                { src: 'images/gallery/doors/door5.jpg', category: 'doors' },
 
             ],
 
@@ -940,7 +967,7 @@
                 { src: 'images/gallery/woodhouse/pergolar (55).jpeg', category: 'woodhouse', featured: true, featuredOrder: 1 },
                 { src: 'images/gallery/woodhouse/build (24).jpeg', category: 'woodhouse' },
                 { src: 'images/gallery/woodhouse/build (26).jpeg', category: 'woodhouse' },
-
+                { src: 'images/gallery/woodhouse/woodhouse1.jpg', category: 'woodhouse' },
                 { src: 'images/gallery/woodhouse/pergolar (58).jpeg', category: 'woodhouse' },
 
             ],
@@ -948,6 +975,8 @@
             // Wall Cladding Category - Add 15 images
             cladding: [
                 { src: 'images/gallery/cladding/wall (1).jpeg', category: 'cladding', featured: true, featuredOrder: 3 },
+                { src: 'images/gallery/cladding/cladding1.jpg', category: 'cladding', featured: true, featuredOrder: 5 },
+                { src: 'images/gallery/cladding/cladding2.jpg', category: 'cladding', featured: true, featuredOrder: 6 },
                 { src: 'images/gallery/cladding/cabinet (1).jpeg', category: 'cladding' },
                 { src: 'images/gallery/cladding/interior-30.jpeg', category: 'cladding' },
                 { src: 'images/gallery/cladding/wall (3).jpeg', category: 'cladding' },
@@ -987,6 +1016,7 @@
                 { src: 'images/gallery/interior/Wardrobe/interior-24.jpeg', category: 'wardrobe' },
                 { src: 'images/gallery/interior/Wardrobe/kitchen (2).jpeg', category: 'wardrobe' },
                 { src: 'images/gallery/interior/Wardrobe/kitchen (8).jpeg', category: 'wardrobe' },
+                { src: 'images/gallery/interior/closet/closet1.jpg', category: 'wardrobe' },
 
               
             ],
@@ -1018,6 +1048,15 @@
                 { src: 'images/gallery/interior/Kitchen Cabinet/interior-76.jpeg', category: 'kitchen-cabinet' },
                 { src: 'images/gallery/interior/Kitchen Cabinet/interior-77.jpeg', category: 'kitchen-cabinet' },
                 { src: 'images/gallery/interior/Kitchen Cabinet/interior-85.jpeg', category: 'kitchen-cabinet' },
+                { src: 'images/gallery/interior/Kitchen Cabinet/kitchenb.jpg', category: 'kitchen-cabinet' },
+                { src: 'images/gallery/interior/Kitchen Cabinet/kitchen2.jpg', category: 'kitchen-cabinet' },
+
+            ],
+
+            // Other Category
+            other: [
+                { src: 'images/gallery/other1.jpg', category: 'other' },
+                { src: 'images/gallery/other2.jpg', category: 'other' },
 
             ]
         };
@@ -1058,7 +1097,8 @@
                     'Floor Decking': 'flooring',
                     'Stairs and Balustrade': 'balustrade',
                     'Wardrobe & Closet': 'wardrobe',
-                    'Kitchen Cabinets': 'kitchen'
+                    'Kitchen Cabinets': 'kitchen',
+                    'Other': 'other'
                 };
                 
                 const category = categoryMap[categoryParam] || 'all';
@@ -1079,24 +1119,26 @@
             // Store the original shuffled all images for later use
             window.allPhotosImages = [...currentImages];
             
-            // Also shuffle each category individually (excluding featured images)
+            // Also shuffle each category individually (excluding featured and fixed position images)
             Object.keys(galleryData).forEach(category => {
                 const categoryImages = galleryData[category];
                 const featured = categoryImages.filter(img => img.featured);
-                const nonFeatured = categoryImages.filter(img => !img.featured);
+                const fixedPosition = categoryImages.filter(img => img.fixedPosition && !img.featured);
+                const nonFeatured = categoryImages.filter(img => !img.featured && !img.fixedPosition);
                 shuffleArray(nonFeatured);
-                // Keep featured at the beginning
-                galleryData[category] = [...featured, ...nonFeatured];
+                // Keep featured at the beginning, then fixed position, then shuffled
+                galleryData[category] = [...featured, ...fixedPosition, ...nonFeatured];
             });
         }
 
         // Advanced function to mix categories and prevent clustering
         function mixCategories(images) {
-            // Separate featured and non-featured images
+            // Separate featured, fixed position, and regular images
             const featured = images.filter(img => img.featured);
             // Sort featured images by featuredOrder
             featured.sort((a, b) => (a.featuredOrder || 999) - (b.featuredOrder || 999));
-            const nonFeatured = images.filter(img => !img.featured);
+            const fixedPosition = images.filter(img => img.fixedPosition && !img.featured);
+            const nonFeatured = images.filter(img => !img.featured && !img.fixedPosition);
             
             // Simple approach: just shuffle multiple times for true randomness (only non-featured)
             let result = [...nonFeatured];
@@ -1119,8 +1161,8 @@
             // One final shuffle
             shuffleArray(result);
             
-            // Place featured images at the beginning
-            return [...featured, ...result];
+            // Place featured images at the beginning, then fixed position, then shuffled
+            return [...featured, ...fixedPosition, ...result];
         }
 
         // Utility function to shuffle array randomly
@@ -1340,6 +1382,14 @@
                 badge.className = 'featured-badge';
                 badge.innerHTML = '<i class="fas fa-star"></i> Featured';
                 item.appendChild(badge);
+            }
+            
+            // Add metal badge if image has metal tag
+            if (image.metal) {
+                const metalBadge = document.createElement('div');
+                metalBadge.className = 'metal-badge';
+                metalBadge.innerHTML = 'Metal';
+                item.appendChild(metalBadge);
             }
             
             const overlay = document.createElement('div');
