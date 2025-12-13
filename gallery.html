@@ -676,6 +676,380 @@
                 background: linear-gradient(to top, rgba(0,0,0,0.5) 0%, transparent 100%);
             }
         }
+
+        /* Media Type Toggle Switch */
+        .media-toggle-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.75rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .media-toggle-label {
+            font-size: 0.9rem;
+            font-weight: 500;
+            color: var(--gray-600);
+            transition: var(--transition);
+            cursor: pointer;
+        }
+
+        .media-toggle-label.active {
+            color: var(--primary);
+            font-weight: 600;
+        }
+
+        .media-toggle {
+            position: relative;
+            width: 60px;
+            height: 32px;
+            background: var(--gray-300);
+            border-radius: 50px;
+            cursor: pointer;
+            transition: var(--transition);
+            border: 2px solid var(--gray-300);
+        }
+
+        .media-toggle:hover {
+            border-color: var(--primary);
+        }
+
+        .media-toggle.active {
+            background: var(--primary);
+            border-color: var(--primary);
+        }
+
+        .media-toggle-slider {
+            position: absolute;
+            top: 2px;
+            left: 2px;
+            width: 24px;
+            height: 24px;
+            background: white;
+            border-radius: 50%;
+            transition: var(--transition);
+            box-shadow: var(--shadow-sm);
+        }
+
+        .media-toggle.active .media-toggle-slider {
+            transform: translateX(28px);
+        }
+
+        .media-toggle-icon {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 0.75rem;
+            color: white;
+            opacity: 0.7;
+        }
+
+        .media-toggle-icon.photo-icon {
+            left: 8px;
+        }
+
+        .media-toggle-icon.video-icon {
+            right: 8px;
+        }
+
+        /* Video Grid Styles */
+        .video-grid {
+            display: none;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .video-grid.active {
+            display: grid;
+        }
+
+        .gallery-grid.hidden {
+            display: none;
+        }
+
+        .video-item {
+            position: relative;
+            border-radius: var(--border-radius);
+            overflow: hidden;
+            background: var(--dark);
+            transition: var(--transition);
+            box-shadow: var(--shadow-md);
+            aspect-ratio: 16/9;
+        }
+
+        .video-item:hover {
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .video-item video,
+        .video-item .video-thumbnail {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .video-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.3);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 1;
+            transition: var(--transition);
+            cursor: pointer;
+        }
+
+        .video-item:hover .video-overlay {
+            background: rgba(0, 0, 0, 0.5);
+        }
+
+        .video-item.playing .video-overlay {
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .video-play-btn {
+            width: 70px;
+            height: 70px;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: var(--transition);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        .video-play-btn i {
+            font-size: 1.8rem;
+            color: var(--primary);
+            margin-left: 4px;
+        }
+
+        .video-item:hover .video-play-btn {
+            transform: scale(1.1);
+            background: white;
+        }
+
+        .video-category-badge {
+            position: absolute;
+            bottom: 12px;
+            left: 12px;
+            background: rgba(0, 0, 0, 0.7);
+            color: white;
+            padding: 0.4rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            backdrop-filter: blur(10px);
+        }
+
+        .video-duration {
+            position: absolute;
+            bottom: 12px;
+            right: 12px;
+            background: rgba(0, 0, 0, 0.8);
+            color: white;
+            padding: 0.3rem 0.6rem;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            font-weight: 500;
+        }
+
+        /* YouTube Play Button */
+        .video-play-btn.youtube-play {
+            background: transparent;
+            box-shadow: none;
+        }
+
+        .video-play-btn.youtube-play i {
+            font-size: 4rem;
+            color: #FF0000;
+            margin-left: 0;
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+        }
+
+        .video-item:hover .video-play-btn.youtube-play i {
+            transform: scale(1.1);
+        }
+
+        /* Video Title Badge */
+        .video-title-badge {
+            position: absolute;
+            top: 12px;
+            left: 12px;
+            right: 12px;
+            background: rgba(0, 0, 0, 0.7);
+            color: white;
+            padding: 0.5rem 0.75rem;
+            border-radius: 8px;
+            font-size: 0.85rem;
+            font-weight: 500;
+            backdrop-filter: blur(10px);
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        /* YouTube Lightbox */
+        .youtube-lightbox {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.95);
+            z-index: 2000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            visibility: hidden;
+            transition: var(--transition);
+        }
+
+        .youtube-lightbox.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .youtube-lightbox-content {
+            position: relative;
+            width: 90%;
+            max-width: 1200px;
+        }
+
+        .youtube-player-wrapper {
+            position: relative;
+            padding-bottom: 56.25%; /* 16:9 aspect ratio */
+            height: 0;
+            overflow: hidden;
+            border-radius: var(--border-radius);
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+        }
+
+        .youtube-player-wrapper iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border-radius: var(--border-radius);
+        }
+
+        .youtube-lightbox-close {
+            position: absolute;
+            top: -50px;
+            right: 0;
+            background: rgba(255, 255, 255, 0.1);
+            border: none;
+            color: white;
+            font-size: 1.5rem;
+            width: 45px;
+            height: 45px;
+            cursor: pointer;
+            transition: var(--transition);
+            border-radius: 50%;
+            backdrop-filter: blur(10px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .youtube-lightbox-close:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: scale(1.1);
+        }
+
+        /* No videos message */
+        .no-videos-message {
+            text-align: center;
+            padding: 4rem 2rem;
+            color: var(--gray-600);
+        }
+
+        .no-videos-message i {
+            font-size: 4rem;
+            color: var(--gray-400);
+            margin-bottom: 1rem;
+            display: block;
+        }
+
+        .no-videos-message h3 {
+            font-size: 1.25rem;
+            margin-bottom: 0.5rem;
+            color: var(--gray-700);
+        }
+
+        .no-videos-message p {
+            font-size: 0.95rem;
+        }
+
+        @media (max-width: 768px) {
+            .video-grid {
+                grid-template-columns: 1fr;
+                gap: 1rem;
+            }
+
+            .media-toggle-container {
+                gap: 0.5rem;
+            }
+
+            .media-toggle-label {
+                font-size: 0.8rem;
+            }
+
+            .media-toggle {
+                width: 50px;
+                height: 28px;
+            }
+
+            .media-toggle-slider {
+                width: 20px;
+                height: 20px;
+            }
+
+            .media-toggle.active .media-toggle-slider {
+                transform: translateX(22px);
+            }
+
+            .video-play-btn {
+                width: 60px;
+                height: 60px;
+            }
+
+            .video-play-btn i {
+                font-size: 1.5rem;
+            }
+
+            .video-play-btn.youtube-play i {
+                font-size: 3rem;
+            }
+
+            .youtube-lightbox-content {
+                width: 95%;
+            }
+
+            .youtube-lightbox-close {
+                top: -45px;
+                right: 0;
+                width: 40px;
+                height: 40px;
+                font-size: 1.2rem;
+            }
+
+            .video-title-badge {
+                font-size: 0.75rem;
+                padding: 0.4rem 0.6rem;
+            }
+        }
     </style>
 </head>
 <body>
@@ -684,6 +1058,15 @@
     <!-- Gallery Header -->
     <header class="gallery-header">
         <div class="gallery-header-container">
+            <div class="media-toggle-container">
+                <span class="media-toggle-label active" id="photosLabel"><i class="fas fa-image"></i> Photos</span>
+                <div class="media-toggle" id="mediaToggle" role="switch" aria-checked="false" tabindex="0">
+                    <span class="media-toggle-icon photo-icon"><i class="fas fa-image"></i></span>
+                    <span class="media-toggle-icon video-icon"><i class="fas fa-video"></i></span>
+                    <div class="media-toggle-slider"></div>
+                </div>
+                <span class="media-toggle-label" id="videosLabel"><i class="fas fa-video"></i> Videos</span>
+            </div>
             <div class="gallery-top-bar">
                 <h1 class="gallery-title">Project Gallery</h1>
                 <div class="gallery-search">
@@ -699,7 +1082,7 @@
     <!-- Sticky Category Filter -->
     <div class="category-filter-wrapper">
         <div class="category-filter" id="categoryFilter">
-            <button class="category-chip active" data-category="all">All Photos</button>
+            <button class="category-chip active" data-category="all" id="allCategoryChip">All Photos</button>
             <button class="category-chip" data-category="wood">Wood House</button>
             <button class="category-chip" data-category="pergola">Pergola</button>
             <button class="category-chip" data-category="cladding">Cladding</button>
@@ -731,6 +1114,11 @@
         <div class="loading-indicator" id="loadingIndicator" style="display: none;">
             <div class="loading-spinner"></div>
             <p>Loading more images...</p>
+        </div>
+
+        <!-- Video Grid -->
+        <div class="video-grid" id="videoGrid">
+            <!-- Videos will be dynamically loaded here -->
         </div>
     </main>
 
@@ -1068,6 +1456,54 @@
         let isLoading = false;
         let imagesPerPage = 20;
         let currentOffset = 0;
+        let currentMediaType = 'photos'; // 'photos' or 'videos'
+
+        // Video Data - Add your YouTube videos here for each category
+        // Format: { youtubeId: 'VIDEO_ID', category: 'category-name', title: 'Video Title' (optional) }
+        // Extract YouTube ID from URL: https://youtu.be/RWrjdp9mnyk -> youtubeId: 'RWrjdp9mnyk'
+        const videoData = {
+            pergola: [
+                { youtubeId: '_7-_5AcaZDk', category: 'pergola', title: 'Pergola' },
+                { youtubeId: '5G62aDkOMFQ', category: 'pergola', title: 'Pergola' },
+            ],
+            building: [
+                { youtubeId: 'hlOd-lPSvCo', category: 'building', title: 'Building Construction' },
+                { youtubeId: 'cpmt7k1xYXw', category: 'building', title: 'Building Construction' },
+            ],
+            interior: [],
+            doors: [
+                { youtubeId: 'jFrbjXTRxNw', category: 'doors', title: 'Wooden Door' },
+            ],
+            wood: [],
+            cladding: [
+                { youtubeId: '617J28NgzMw', category: 'cladding', title: 'Wall Cladding' },
+                { youtubeId: '97WpZWDiNWo', category: 'cladding', title: 'Wall Cladding' },
+            ],
+            flooring: [],
+            balustrade: [
+                { youtubeId: 'l3-KcyeWgHw', category: 'balustrade', title: 'Stairs and Balustrades' },
+            ],
+            wardrobe: [],
+            kitchen: [],
+            other: [
+                { youtubeId: '5U8OTm-A2CI', category: 'other', title: 'Other' },
+            ]
+        };
+
+        // Helper function to extract YouTube ID from various URL formats
+        function extractYouTubeId(url) {
+            const patterns = [
+                /youtu\.be\/([^?&]+)/,
+                /youtube\.com\/watch\?v=([^&]+)/,
+                /youtube\.com\/embed\/([^?&]+)/,
+                /youtube\.com\/v\/([^?&]+)/
+            ];
+            for (const pattern of patterns) {
+                const match = url.match(pattern);
+                if (match) return match[1];
+            }
+            return url; // Return as-is if it's already just an ID
+        }
 
         // Lightbox elements (same pattern as index.html)
         const lightbox = document.getElementById('lightbox');
@@ -1080,6 +1516,7 @@
         document.addEventListener('DOMContentLoaded', function() {
             initializeGallery();
             setupEventListeners();
+            setupMediaToggle();
             
             // Check for category parameter in URL
             const urlParams = new URLSearchParams(window.location.search);
@@ -1300,6 +1737,11 @@
             } else {
                 pricingButtonContainer.classList.remove('visible');
             }
+
+            // Load appropriate content based on current media type
+            if (currentMediaType === 'videos') {
+                loadVideos(category);
+            }
         }
 
         function loadImages(category, offset = 0) {
@@ -1407,7 +1849,11 @@
         }
 
         function searchImages(searchTerm) {
-            loadImages(currentCategory, 0);
+            if (currentMediaType === 'videos') {
+                loadVideos(currentCategory);
+            } else {
+                loadImages(currentCategory, 0);
+            }
         }
 
         function openLightbox(image, index) {
@@ -1497,6 +1943,218 @@
                 clearTimeout(timeout);
                 timeout = setTimeout(later, wait);
             };
+        }
+
+        // Media Toggle Setup
+        function setupMediaToggle() {
+            const mediaToggle = document.getElementById('mediaToggle');
+            const photosLabel = document.getElementById('photosLabel');
+            const videosLabel = document.getElementById('videosLabel');
+            const galleryGrid = document.getElementById('galleryGrid');
+            const videoGrid = document.getElementById('videoGrid');
+            const searchInput = document.getElementById('searchInput');
+            const categoryFilterWrapper = document.querySelector('.category-filter-wrapper');
+
+            function toggleMedia() {
+                const isVideos = mediaToggle.classList.toggle('active');
+                currentMediaType = isVideos ? 'videos' : 'photos';
+                
+                // Update labels
+                photosLabel.classList.toggle('active', !isVideos);
+                videosLabel.classList.toggle('active', isVideos);
+                
+                // Update aria attribute
+                mediaToggle.setAttribute('aria-checked', isVideos);
+                
+                // Toggle grids
+                galleryGrid.classList.toggle('hidden', isVideos);
+                videoGrid.classList.toggle('active', isVideos);
+                
+                // Update search placeholder
+                searchInput.placeholder = isVideos ? 'Search videos...' : 'Search images...';
+                
+                // Update "All Photos" / "All Videos" text
+                const allCategoryChip = document.getElementById('allCategoryChip');
+                allCategoryChip.textContent = isVideos ? 'All Videos' : 'All Photos';
+                
+                // Show/hide category filter for videos (optional - you can remove this if you want categories for videos too)
+                // categoryFilterWrapper.style.display = isVideos ? 'none' : 'block';
+                
+                // Load appropriate content
+                if (isVideos) {
+                    loadVideos(currentCategory);
+                } else {
+                    loadImages(currentCategory, 0);
+                }
+            }
+
+            // Click handler
+            mediaToggle.addEventListener('click', toggleMedia);
+            
+            // Keyboard handler for accessibility
+            mediaToggle.addEventListener('keydown', function(e) {
+                if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault();
+                    toggleMedia();
+                }
+            });
+
+            // Label click handlers
+            photosLabel.addEventListener('click', function() {
+                if (currentMediaType === 'videos') {
+                    toggleMedia();
+                }
+            });
+
+            videosLabel.addEventListener('click', function() {
+                if (currentMediaType === 'photos') {
+                    toggleMedia();
+                }
+            });
+        }
+
+        // Load Videos
+        function loadVideos(category) {
+            const videoGrid = document.getElementById('videoGrid');
+            videoGrid.innerHTML = '';
+
+            let videos = category === 'all' 
+                ? Object.values(videoData).flat()
+                : videoData[category] || [];
+
+            // Apply search filter if exists
+            const searchTerm = document.getElementById('searchInput').value.toLowerCase();
+            if (searchTerm) {
+                videos = videos.filter(video => 
+                    video.category.toLowerCase().includes(searchTerm) ||
+                    video.src.toLowerCase().includes(searchTerm)
+                );
+            }
+
+            if (videos.length === 0) {
+                videoGrid.innerHTML = `
+                    <div class="no-videos-message" style="grid-column: 1 / -1;">
+                        <i class="fas fa-video-slash"></i>
+                        <h3>No Videos Available</h3>
+                        <p>Videos for this category will be added soon. Check back later!</p>
+                    </div>
+                `;
+                return;
+            }
+
+            videos.forEach((video, index) => {
+                const videoItem = createVideoItem(video, index);
+                videoGrid.appendChild(videoItem);
+            });
+        }
+
+        // Create Video Item (YouTube Embed)
+        function createVideoItem(video, index) {
+            const item = document.createElement('div');
+            item.className = 'video-item';
+            item.setAttribute('data-index', index);
+            item.setAttribute('data-youtube-id', video.youtubeId);
+
+            // YouTube thumbnail
+            const thumbnail = document.createElement('img');
+            thumbnail.src = `https://img.youtube.com/vi/${video.youtubeId}/maxresdefault.jpg`;
+            thumbnail.alt = video.title || `${video.category} video`;
+            thumbnail.className = 'video-thumbnail';
+            thumbnail.onerror = function() {
+                // Fallback to hqdefault if maxresdefault doesn't exist
+                this.src = `https://img.youtube.com/vi/${video.youtubeId}/hqdefault.jpg`;
+            };
+
+            const overlay = document.createElement('div');
+            overlay.className = 'video-overlay';
+
+            const playBtn = document.createElement('div');
+            playBtn.className = 'video-play-btn youtube-play';
+            playBtn.innerHTML = '<i class="fab fa-youtube"></i>';
+
+            const categoryBadge = document.createElement('div');
+            categoryBadge.className = 'video-category-badge';
+            categoryBadge.textContent = video.category;
+
+            if (video.title) {
+                const titleBadge = document.createElement('div');
+                titleBadge.className = 'video-title-badge';
+                titleBadge.textContent = video.title;
+                item.appendChild(titleBadge);
+            }
+
+            overlay.appendChild(playBtn);
+            item.appendChild(thumbnail);
+            item.appendChild(overlay);
+            item.appendChild(categoryBadge);
+
+            // Click to play YouTube video
+            item.addEventListener('click', function() {
+                openYouTubePlayer(video.youtubeId, video.title);
+            });
+
+            return item;
+        }
+
+        // Open YouTube Player in Lightbox
+        function openYouTubePlayer(youtubeId, title) {
+            // Create YouTube lightbox if it doesn't exist
+            let ytLightbox = document.getElementById('youtubeLightbox');
+            if (!ytLightbox) {
+                ytLightbox = document.createElement('div');
+                ytLightbox.id = 'youtubeLightbox';
+                ytLightbox.className = 'youtube-lightbox';
+                ytLightbox.innerHTML = `
+                    <div class="youtube-lightbox-content">
+                        <button class="youtube-lightbox-close" id="ytLightboxClose">
+                            <i class="fas fa-times"></i>
+                        </button>
+                        <div class="youtube-player-wrapper">
+                            <iframe id="youtubeIframe" 
+                                    src="" 
+                                    frameborder="0" 
+                                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+                                    allowfullscreen>
+                            </iframe>
+                        </div>
+                    </div>
+                `;
+                document.body.appendChild(ytLightbox);
+
+                // Close button handler
+                document.getElementById('ytLightboxClose').addEventListener('click', closeYouTubePlayer);
+                
+                // Close on background click
+                ytLightbox.addEventListener('click', function(e) {
+                    if (e.target === ytLightbox) {
+                        closeYouTubePlayer();
+                    }
+                });
+
+                // Close on Escape key
+                document.addEventListener('keydown', function(e) {
+                    if (e.key === 'Escape' && ytLightbox.classList.contains('active')) {
+                        closeYouTubePlayer();
+                    }
+                });
+            }
+
+            // Set iframe source and show lightbox
+            const iframe = document.getElementById('youtubeIframe');
+            iframe.src = `https://www.youtube.com/embed/${youtubeId}?autoplay=1&rel=0`;
+            ytLightbox.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        // Close YouTube Player
+        function closeYouTubePlayer() {
+            const ytLightbox = document.getElementById('youtubeLightbox');
+            const iframe = document.getElementById('youtubeIframe');
+            if (ytLightbox) {
+                ytLightbox.classList.remove('active');
+                iframe.src = ''; // Stop video
+                document.body.style.overflow = 'auto';
+            }
         }
     </script>
 </body>
